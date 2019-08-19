@@ -46,7 +46,7 @@ function start(counter){
       var tankMessage = new Message(JSON.stringify(tank_iot_01.createReading()));
       console.log('Sending tank message: ' + tankMessage.getData());
 
-      // Send the message.
+      //Send the message.
       tankClient.sendEvent(tankMessage,(err) => {
         if (err) {
           console.error('send error: ' + err.toString());

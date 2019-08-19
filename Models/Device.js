@@ -9,6 +9,25 @@ class Device{
         this.type = type;
     }
 
+    getDsn(){
+        return this.dsn;
+    }
+
+    getGeolocation(){
+        return this.geolocation;
+    }
+
+    getType(){
+        return this.type;
+    }
+
+    createMessage(reading){
+        reading["dsn"]=this.getDsn();
+        reading["geolocation"] = this.getGeolocation();
+        reading["type"] = this.getType();
+        return reading;
+    }
+    
     createReading(){
         throw new Error("No create reading method")
     }

@@ -31,7 +31,7 @@ class EnergyDevice extends Device {
 
         var watts = super.continuousReading(timeStamp,breakDown)();
 
-        return {"watts":watts}
+        return this.createMessage({"watts":watts})
     }
 
 }

@@ -50,7 +50,7 @@ class WindDevice extends Device{
         var direction = super.discreteReading(timeStamp,weighting);
         var mph = super.continuousReading(timeStamp,breakDown)();
 
-        return {"mph":mph,"direction":direction}
+        return this.createMessage({"mph":mph,"direction":direction})
     }
 }
 

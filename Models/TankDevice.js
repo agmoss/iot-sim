@@ -33,7 +33,7 @@ class TankDevice extends Device{
 
         var liters = super.continuousReading(timeStamp,breakDown)();
 
-        return {"liters":liters}
+        return this.createMessage({"liters":liters});
     }
 }
 
