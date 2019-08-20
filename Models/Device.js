@@ -1,5 +1,6 @@
 var d3 = require("d3-random");
 var Chance = require('chance');
+const uuidv4 = require('uuid/v4');
 
 class Device{
 
@@ -22,6 +23,7 @@ class Device{
     }
 
     createMessage(reading){
+        reading["_id"] = uuidv4();
         reading["dsn"]=this.getDsn();
         reading["geolocation"] = this.getGeolocation();
         reading["type"] = this.getType();
