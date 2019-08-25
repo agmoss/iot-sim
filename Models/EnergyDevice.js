@@ -1,12 +1,21 @@
 const Device = require('./Device');
 
+/**
+ * EnergyDevice class.
+ *
+ * @constructor
+ * @param {String} dsn - device serial number.
+ * @param {String} geolocation  - location of the IoT device.
+ * @param {String} type  - type of device.
+ * @param {String} connectionString  - connection paramater for Azure IoT hub.
+ */
 
 class EnergyDevice extends Device {
-    constructor(dsn,geolocation,type){
-        super(dsn,geolocation,type)
+    constructor(dsn,geolocation,type,connectionString){
+        super(dsn,geolocation,type,connectionString);
     }
 
-    createReading(){
+    createDeviceTelemetry(){
         var timeStamp = new Date();
 
         var breakDown = [
@@ -31,7 +40,7 @@ class EnergyDevice extends Device {
 
         var watts = super.continuousReading(timeStamp,breakDown)();
 
-        return this.createMessage({"watts":watts})
+        return this.setTelemetry({"watts":watts,"timestamp":timeStamp})
     }
 
 }

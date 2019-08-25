@@ -1,11 +1,21 @@
 const Device = require('./Device');
 
+/**
+ * WindDevice class.
+ *
+ * @constructor
+ * @param {String} dsn - device serial number.
+ * @param {String} geolocation  - location of the IoT device.
+ * @param {String} type  - type of device.
+ * @param {String} connectionString  - connection paramater for Azure IoT hub.
+ */
+
 class WindDevice extends Device{
-    constructor(dsn,geolocation,type){
-        super(dsn,geolocation,type)
+    constructor(dsn,geolocation,type,connectionString){
+        super(dsn,geolocation,type,connectionString)
     }
 
-    createReading(){
+    createDeviceTelemetry(){
         
         var timeStamp = new Date();
 
@@ -50,7 +60,7 @@ class WindDevice extends Device{
         var direction = super.discreteReading(timeStamp,weighting);
         var mph = super.continuousReading(timeStamp,breakDown)();
 
-        return this.createMessage({"mph":mph,"direction":direction})
+        return this.setTelemetry({"mph":mph,"direction":direction,"timestamp":timeStamp})
     }
 }
 

@@ -2,13 +2,31 @@ var d3 = require("d3-random");
 var Chance = require('chance');
 const uuidv4 = require('uuid/v4');
 
+var Mqtt = require('azure-iot-device-mqtt').Mqtt;
+var DeviceClient = require('azure-iot-device').Client;
+var Message = require('azure-iot-device').Message;
+
+/**
+ * Device Superclass.
+ *
+ * @constructor
+ * @param {String} dsn - device serial number.
+ * @param {String} geolocation  - location of the IoT device.
+ * @param {String} type  - type of device.
+ * @param {String} connectionString  - connection paramater for Azure IoT hub.
+ */
+
 class Device{
 
-    constructor(dsn,geolocation,type){
+    constructor(dsn,type,connectionString){
         this.dsn = dsn;
-        this.geolocation = geolocation;
         this.type = type;
+        this.connectionString = connectionString;
+        this.facility = null;
+        this.geolocation = null;
     }
+
+    //Getters/Setters
 
     getDsn(){
         return this.dsn;
@@ -18,21 +36,95 @@ class Device{
         return this.geolocation;
     }
 
+    setGeolocation(geolocation){
+        this.geolocation = geolocation;
+    }
+
+    getFacility(){
+        return this.facility
+    }
+
+    setFacility(facility){
+        this.facility = facility;
+    }
+
     getType(){
         return this.type;
     }
 
-    createMessage(reading){
+    getConnectionString(){
+        return this.connectionString;
+    }
+
+    setClient(client){
+        this.client = client;
+    }
+
+    getClient(){
+        return this.client;
+    }
+
+    setReading(reading){
+        this.reading = reading;
+    }
+
+    getReading(){
+        return this.reading;
+    }
+
+    setTelemetry(telemetry){
+        this.telemetry = telemetry;
+    }
+    
+    getTelemetry(){
+        return this.telemetry
+    }
+
+    // Device IoT Message methods
+
+    createDeviceTelemetry(){
+        throw new Error("No Telemetry method!");
+    }
+
+    createClient(){
+
+        try{
+            var client = DeviceClient.fromConnectionString(this.getConnectionString(), Mqtt);
+            this.setClient(client);
+
+        } catch(error){
+            console.log(`Error creating the client! ${error}`)
+        }
+    }
+
+    createReading(){
+        var reading = this.getTelemetry();
+        reading["timestamp"] = reading["timestamp"].getTime();
         reading["_id"] = uuidv4();
         reading["dsn"]=this.getDsn();
         reading["geolocation"] = this.getGeolocation();
+        reading["facility"] = this.getFacility();
         reading["type"] = this.getType();
-        return reading;
+        this.setReading(reading);
     }
     
-    createReading(){
-        throw new Error("No create reading method")
+    sendMessage(){
+ 
+        var client = this.getClient();
+        var message = new Message(JSON.stringify(this.getReading()));
+        console.log(`Sending ${this.getDsn()} message: ${message.getData()}`);
+
+        client.sendEvent(message,(error)=>{
+            if (error) {
+                console.error(`send error: ${error.toString()}`);
+            } else {
+            console.log(` ${this.getDsn()} message sent`);
+            }
+        });
     }
+
+
+    // Device Telemetry Data
 
     discreteReading(timeStamp,weighting){
         var chance = new Chance();
