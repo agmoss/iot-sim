@@ -5,7 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
+    "start": "node index.js",
+    "register device":"az iot hub device-identity create --hub-name YourIoTHubName --device-id MyNodeDevice",
+    "show device connection":"az iot hub device-identity show-connection-string --hub-name YourIoTHubName --device-id MyNodeDevice --output table",
+    "show service connection":"az iot hub device-identity show-connection-string --hub-name YourIoTHubName --device-id MyNodeDevice --output table"
   },
   "author": "Andrew Moss",
   "license": "ISC",
