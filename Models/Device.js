@@ -98,8 +98,11 @@ class Device{
     }
 
     createReading(){
-        var reading = this.getTelemetry();
-        reading["timestamp"] = reading["timestamp"].getTime();
+
+        var reading = {};
+        reading["data"] = this.getTelemetry();
+        reading["timestamp"] = reading["data"]["timestamp"].getTime();
+        delete reading.data.timestamp;
         reading["_id"] = uuidv4();
         reading["dsn"]=this.getDsn();
         reading["geolocation"] = this.getGeolocation();
@@ -193,7 +196,8 @@ class Device{
             case 14:
             case 15:
             case 16:
-                    reading = d3.randomNormavgfzcdvcxcxvvcxcvcvcvdffdfdsfdsfaffadsfadssdfddfdfdfder
+                reading = d3.randomNormal(breakDown[1]["mean"],breakDown[1]["sd"]);
+                break;
             case 17:
             case 18:
             case 19:

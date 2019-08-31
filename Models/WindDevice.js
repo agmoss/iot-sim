@@ -40,27 +40,27 @@ class WindDevice extends Device{
 
         var breakDown = [
             {
-                "mean":100,
-                "sd" : 10
+                "mean":10,
+                "sd" : 3
             },
             {
-                "mean":400,
-                "sd":30    
+                "mean":40,
+                "sd":5.1    
             },
             {
-                "mean":200,
-                "sd":15
+                "mean":20,
+                "sd":1.3
             },
             {
-                "mean":100,
-                "sd":10
+                "mean":10,
+                "sd":1.1
             }
         ]
 
         var direction = super.discreteReading(timeStamp,weighting);
         var mph = super.continuousReading(timeStamp,breakDown)();
 
-        return this.setTelemetry({"mph":mph,"direction":direction,"timestamp":timeStamp})
+        return this.setTelemetry({"mph":mph.toFixed(3),"direction":direction,"timestamp":timeStamp})
     }
 }
 

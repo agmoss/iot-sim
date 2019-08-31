@@ -19,7 +19,7 @@ class TankDevice extends Device{
         
         var timeStamp = new Date();
 
-        var breakDown = [
+        var litersBreakDown = [
             {
                 "mean":100,
                 "sd" : 5
@@ -36,12 +36,31 @@ class TankDevice extends Device{
                 "mean":75,
                 "sd":1
             }
+        ];
 
-        ]
+        var phBreakdown = [
+            {
+                "mean":10,
+                "sd" : 0.4
+            },
+            {
+                "mean":9,
+                "sd":0.25    
+            },
+            {
+                "mean":6,
+                "sd":0.25
+            },
+            {
+                "mean":7,
+                "sd":0.1
+            }
+        ];
 
-        var liters = super.continuousReading(timeStamp,breakDown)();
+        var liters = super.continuousReading(timeStamp,litersBreakDown)();
+        var pH = super.continuousReading(timeStamp,phBreakdown)();
 
-        return this.setTelemetry({"liters":liters,"timestamp":timeStamp});
+        return this.setTelemetry({"liters":liters.toFixed(3),"pH":pH.toFixed(3),"timestamp":timeStamp});
     }
 }
 
