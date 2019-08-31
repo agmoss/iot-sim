@@ -40,7 +40,7 @@ class EnergyDevice extends Device {
 
         var watts = super.continuousReading(timeStamp,breakDown)();
 
-        return this.setTelemetry({"watts":watts,"timestamp":timeStamp})
+        return this.setTelemetry({"watts":watts.toFixed(3),"timestamp":timeStamp})
     }
 
 }
