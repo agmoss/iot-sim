@@ -13,7 +13,7 @@ class Facility {
     constructor(name,devices,geolocation) {
       this.name = name;
       this.devices = devices;
-      this.geolocation = geolocation
+      this.geolocation = geolocation;
     }
 
     getDevices(){

@@ -100,10 +100,12 @@ class Device{
     createReading(){
 
         var reading = {};
+        var id = uuidv4();
         reading["data"] = this.getTelemetry();
         reading["timestamp"] = reading["data"]["timestamp"].getTime();
         delete reading.data.timestamp;
-        reading["_id"] = uuidv4();
+        reading["id"] = id;
+        reading["_id"] = id;
         reading["dsn"]=this.getDsn();
         reading["geolocation"] = this.getGeolocation();
         reading["facility"] = this.getFacility();
