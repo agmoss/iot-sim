@@ -44,7 +44,7 @@ class Facility {
                 device.sendMessage();
             });  
 
-        }, 5000);
+        }, 60000);
     }
   }
 
