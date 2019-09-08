@@ -1,5 +1,7 @@
 const Device = require('./Device');
 
+const profile = require('../Profiles/energy');
+
 /**
  * EnergyDevice class.
  *
@@ -11,34 +13,26 @@ const Device = require('./Device');
  */
 
 class EnergyDevice extends Device {
-    constructor(dsn,geolocation,type,connectionString){
-        super(dsn,geolocation,type,connectionString);
+    constructor(dsn,type,connectionString,profile,print){
+        super(dsn,type,connectionString,profile,print);
     }
 
     createDeviceTelemetry(){
+        
         var timeStamp = new Date();
 
-        var breakDown = [
-            {
-                "mean":100,
-                "sd" : 10
-            },
-            {
-                "mean":400,
-                "sd":30    
-            },
-            {
-                "mean":200,
-                "sd":15
-            },
-            {
-                "mean":100,
-                "sd":10
-            }
+        var wattageProfile = null;
 
-        ]
+        // Select profile
+        if (super.getProfile()=== "profile1"){
+            wattageProfile = profile.profile1;
+        }
+        else if (super.getProfile()=== "profile2"){
+            wattageProfile = profile.profile2;
+        }
 
-        var watts = super.continuousReading(timeStamp,breakDown)();
+        // Create reading
+        var watts = super.continuousReading(timeStamp,wattageProfile)();
 
         return this.setTelemetry({"watts":watts.toFixed(3),"timestamp":timeStamp})
     }

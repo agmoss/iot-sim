@@ -1,4 +1,5 @@
 const Device = require('./Device');
+const profile = require('../Profiles/wind');
 
 /**
  * WindDevice class.
@@ -11,54 +12,36 @@ const Device = require('./Device');
  */
 
 class WindDevice extends Device{
-    constructor(dsn,geolocation,type,connectionString){
-        super(dsn,geolocation,type,connectionString)
+    constructor(dsn,geolocation,type,connectionString,profile,print){
+        super(dsn,geolocation,type,connectionString,profile,print)
     }
 
     createDeviceTelemetry(){
         
         var timeStamp = new Date();
 
-        var weighting = [
-            {
-                "values":['N','S','E','W'],
-                "weights" : [1,2,1,1]
-            },
-            {
-                "values":['N','S','E','W'],
-                "weights" : [1,2,1,1]
-            },
-            {
-                "values":['N','S','E','W'],
-                "weights" : [1,2,1,1]
-            },
+        // Set up data profile
+        var directionProfile = [
             {
                 "values":['N','S','E','W'],
                 "weights" : [1,2,1,1]
             }
         ]
 
-        var breakDown = [
-            {
-                "mean":10,
-                "sd" : 3
-            },
-            {
-                "mean":40,
-                "sd":5.1    
-            },
-            {
-                "mean":20,
-                "sd":1.3
-            },
-            {
-                "mean":10,
-                "sd":1.1
-            }
-        ]
 
-        var direction = super.discreteReading(timeStamp,weighting);
-        var mph = super.continuousReading(timeStamp,breakDown)();
+        var mphProfile = null;
+
+        // Select profile
+        if (super.getProfile()=== "profile1"){
+            mphProfile = profile.profile1;
+        }
+        else if (super.getProfile()=== "profile2"){
+            mphProfile = profile.profile2;
+        }
+        
+        // Create readings
+        var direction = super.discreteReading(directionProfile);
+        var mph = super.continuousReading(timeStamp,mphProfile)();
 
         return this.setTelemetry({"mph":mph.toFixed(3),"direction":direction,"timestamp":timeStamp})
     }

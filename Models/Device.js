@@ -18,12 +18,14 @@ var Message = require('azure-iot-device').Message;
 
 class Device{
 
-    constructor(dsn,type,connectionString){
+    constructor(dsn,type,connectionString,profile,print){
         this.dsn = dsn;
         this.type = type;
         this.connectionString = connectionString;
         this.facility = null;
         this.geolocation = null;
+        this.profile = profile;
+        this.print = print;
     }
 
     //Getters/Setters
@@ -80,6 +82,14 @@ class Device{
         return this.telemetry
     }
 
+    getProfile(){
+        return this.profile;
+    }
+
+    setProfile(profile){
+        this.profile = profile;
+    }
+
     // Device IoT Message methods
 
     createDeviceTelemetry(){
@@ -114,106 +124,41 @@ class Device{
     }
     
     sendMessage(){
- 
-        var client = this.getClient();
-        var message = new Message(JSON.stringify(this.getReading()));
-        console.log(`Sending ${this.getDsn()} message: ${message.getData()}`);
 
-        client.sendEvent(message,(error)=>{
-            if (error) {
-                console.error(`send error: ${error.toString()}`);
-            } else {
-            console.log(` ${this.getDsn()} message sent`);
-            }
-        });
+        if (!this.print){
+            var client = this.getClient();
+            var message = new Message(JSON.stringify(this.getReading()));
+            console.log(`Sending ${this.getDsn()} message: ${message.getData()}`);
+    
+            client.sendEvent(message,(error)=>{
+                if (error) {
+                    console.error(`send error: ${error.toString()}`);
+                } else {
+                console.log(` ${this.getDsn()} message sent`);
+                }
+            });
+        } else {
+            var message = new Message(JSON.stringify(this.getReading()));
+            console.log(`Sending ${this.getDsn()} message: ${message.getData()}`);
+        }
+
     }
 
 
     // Device Telemetry Data
 
-    discreteReading(timeStamp,weighting){
+    discreteReading(weighting){
+
         var chance = new Chance();
 
-        var reading = 0;
-        switch(timeStamp.getHours()){
-            case 0:
-            case 1:
-            case 2:
-            case 3:
-            case 4:
-            case 5:
-            case 6:
-            case 7:
-            case 8:
-                reading = chance.weighted(weighting[0]['values'],weighting[0]['weights']);
-                break;
-            case 9:
-            case 10:
-            case 11:
-            case 12:
-            case 13:
-            case 14:
-            case 15:
-            case 16:
-                
-                reading = chance.weighted(weighting[1]['values'],weighting[1]['weights']);
-            case 17:
-            case 18:
-            case 19:
-            case 20:
-            case 21:
-            case 22:
-            case 23:
-            case 24:
-                    reading = chance.weighted(weighting[2]['values'],weighting[2]['weights']);
-                    break;
-
-        }
-
-        return reading;
+        return chance.weighted(weighting[0]['values'],weighting[0]['weights']);
 
     }
 
     continuousReading(timeStamp,breakDown){
 
-        var reading = 0;
+        return d3.randomNormal(breakDown[timeStamp.getHours()]["mean"],breakDown[timeStamp.getHours()]["sd"]);
 
-        switch(timeStamp.getHours()){
-            case 0:
-            case 1:
-            case 2:
-            case 3:
-            case 4:
-            case 5:
-            case 6:
-            case 7:
-            case 8:
-                reading = d3.randomNormal(breakDown[0]["mean"],breakDown[0]["sd"]);
-                break;
-            case 9:
-            case 10:
-            case 11:
-            case 12:
-            case 13:
-            case 14:
-            case 15:
-            case 16:
-                reading = d3.randomNormal(breakDown[1]["mean"],breakDown[1]["sd"]);
-                break;
-            case 17:
-            case 18:
-            case 19:
-            case 20:
-            case 21:
-            case 22:
-            case 23:
-            case 24:
-                    reading = d3.randomNormal(breakDown[2]["mean"],breakDown[2]["sd"]);
-                    break;
-
-        }
-        
-        return reading;
     }
 }
 
