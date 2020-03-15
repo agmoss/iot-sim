@@ -1,7 +1,6 @@
-
 /**
  * Facility class.
- * 
+ *
  * Models the composition of IoT objects into a single IoT "Facility"
  *
  * @constructor
@@ -12,48 +11,42 @@
  */
 
 class Facility {
-    constructor(name,devices,geolocation,frequency) {
-      this.name = name;
-      this.devices = devices;
-      this.geolocation = geolocation;
-      this.frequency = frequency;
+    constructor({ name, devices, geolocation, frequency }) {
+        this.name = name;
+        this.devices = devices;
+        this.geolocation = geolocation;
+        this.frequency = frequency;
     }
 
-    getDevices(){
+    getDevices() {
         return this.devices;
     }
 
-    getGeolocation(){
+    getGeolocation() {
         return this.geolocation;
     }
 
-    getFrequency(){
+    getFrequency() {
         return this.frequency;
     }
 
-    setupFacility(){
-        devices.forEach(device => {
+    setupFacility() {
+        this.devices.forEach(device => {
             device.setGeolocation(this.getGeolocation());
             device.setFacility(this.name);
-        }); 
+        });
     }
 
-    putOnline(){
-
-        setInterval(()=>{ 
-
-            var devices = this.getDevices();
-
-            devices.forEach(device => {
+    putOnline() {
+        setInterval(() => {
+            this.devices.forEach(device => {
                 device.createClient();
                 device.createDeviceTelemetry();
                 device.createReading();
                 device.sendMessage();
-            });  
-
+            });
         }, this.getFrequency());
     }
-  }
+}
 
-
-  module.exports = Facility;
+module.exports = Facility;
