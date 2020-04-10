@@ -1,6 +1,6 @@
 {
   "name": "iot-sim",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Simulation of IoT devices",
   "main": "index.js",
   "repository": {
@@ -14,10 +14,10 @@
     "facility"
   ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "example:start": "node -r esm example",
     "lint": "eslint --fix --ext .js .",
-    "format": "prettier --write \"lib/**/*.js\""
+    "format": "prettier --write \"lib/**/*.js\"",
+    "test": "mocha --require esm"
   },
   "author": "Andrew Moss <andrew@m0ss.dev> (https://m0ss.dev/)",
   "license": "MIT",
@@ -36,6 +36,7 @@
     "uuid": "^3.3.3"
   },
   "devDependencies": {
+    "chai": "^4.2.0",
     "eslint": "^6.8.0",
     "eslint-config-node": "^4.0.0",
     "eslint-config-prettier": "^6.10.0",
@@ -45,6 +46,7 @@
     "eslint-plugin-prettier": "^3.1.2",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
+    "mocha": "^7.1.1",
     "prettier": "^1.19.1"
   }
 }

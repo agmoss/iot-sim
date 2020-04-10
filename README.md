@@ -48,7 +48,7 @@ This project creates simulated IoT devices and facilities. Realistic data is gen
 ### Usage
 
 ```javascript
-import {TankDevice, WindDevice, EnergyDevice, Facility} from "../index"
+import {TankDevice, WindDevice, EnergyDevice, Facility} from "iot-sim"
 
 // Facility 1
 
