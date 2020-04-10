@@ -1,6 +1,6 @@
-# iot-simulation
+# iot-sim [![NPM Package](https://img.shields.io/npm/v/iot-sim)](https://www.npmjs.com/package/iot-sim)
 
-> Representational simulation of IoT devices.
+> Representational simulation of IoT devices. 
 
 ## About
 
