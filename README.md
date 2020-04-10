@@ -98,7 +98,7 @@ facility_01.putOnline();
 
 ```javascript
 {
-  data: { watts: '171.189' },
+  data: { watts: 171.189 },
   timestamp: 1586550588454,
   id: 'a855447a-b488-475b-bb2c-be80cabba8ca',
   _id: 'a855447a-b488-475b-bb2c-be80cabba8ca',
@@ -108,7 +108,7 @@ facility_01.putOnline();
   type: 'energy'
 }
 {
-  data: { mph: '20.995', direction: 'S' },
+  data: { mph: 20.995, direction: 'S' },
   timestamp: 1586550588459,
   id: '6042d595-b93f-4ff8-884a-38d860fa73c4',
   _id: '6042d595-b93f-4ff8-884a-38d860fa73c4',
@@ -118,7 +118,7 @@ facility_01.putOnline();
   type: 'wind'
 }
 {
-  data: { liters: '98.404', pH: '6.079' },
+  data: { liters: 98.404, pH: 6.079 },
   timestamp: 1586550588460,
   id: 'd2befdfa-b2d9-4b9a-8970-523c486346b1',
   _id: 'd2befdfa-b2d9-4b9a-8970-523c486346b1',
