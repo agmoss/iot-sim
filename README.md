@@ -1,21 +1,31 @@
 # iot-sim [![NPM Package](https://img.shields.io/npm/v/iot-sim)](https://www.npmjs.com/package/iot-sim)
 
-> Representational simulation of IoT devices. 
+> Representational simulation of IoT devices.
+
+## Table of Contents
+
+- [iot-sim ![NPM Package](https://www.npmjs.com/package/iot-sim)](#iot-sim-)
+  - [Table of Contents](#table-of-contents)
+  - [About](#about)
+  - [Devices](#devices)
+  - [Device API](#device-api)
+  - [Facility API](#facility-api)
+    - [Usage](#usage)
+  - [Output data](#output-data)
 
 ## About
 
-This project creates simulated IoT devices and facilities. Realistic data is generated based on the type of device and time of day. IoT telemetry data can be handled by a custom user defined function. 
+This project creates simulated IoT devices and facilities. Realistic data is generated based on the type of device and time of day. IoT telemetry data can be handled by a custom user-defined function.
 
 ## Devices
 
-* Energy Device
-* Tank Device 
-* Wind Device
-
+- Energy Device
+- Tank Device
+- Wind Device
 
 ## Device API
 
-```javascript 
+```javascript
 /**
  * Device
  *
@@ -93,8 +103,7 @@ facility_01.setupFacility();
 facility_01.putOnline();
 ```
 
-
-## Output data 
+## Output data
 
 ```javascript
 {
@@ -128,7 +137,3 @@ facility_01.putOnline();
   type: 'tank'
 }
 ```
-
-## Author
-
-* **Andrew Moss** - *Creator* - [agmoss](https://github.com/agmoss)
